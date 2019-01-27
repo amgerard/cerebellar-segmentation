@@ -1,11 +1,10 @@
 import random
 import numpy as np
 from sklearn.model_selection import train_test_split
-from read_and_convert import get_imgs_and_edges
-from get_patches_3d import sample_patches
+from datax.read_and_convert import get_imgs_and_edges
+from datax.get_patches_3d import sample_patches
 
 all_imgs = []  # used across project
-do_3d = True
 
 def get_shuffled(x_arr, y_arr):
     x_and_y = [np.append(x_arr[i],y_arr[i]) for i in range(x_arr.shape[0])]

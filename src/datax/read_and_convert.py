@@ -1,7 +1,7 @@
 import numpy as np
 import SimpleITK as sitk
 import itertools
-from normalize import normalize, norm_to_zscore
+from datax.normalize import normalize, norm_to_zscore
 
 def merge_dicts(*dict_args):
     """

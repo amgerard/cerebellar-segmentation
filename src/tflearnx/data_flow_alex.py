@@ -138,7 +138,7 @@ class FeedDictFlowAlex(DataFlow):
             x_shape_3d = [len(patches_idxs), p_sz, p_sz, p_sz, 2]
             x_shape_2d = [len(patches_idxs), p_sz, p_sz, 2]
 
-            x = np.empty(x_shape_3d if datax.data.do_3d else x_shape_2d)
+            x = np.empty(x_shape_3d if config.patch_num_dim == 3 else x_shape_2d)
             y = fd_as_list[1]
 
             for ix, idxs in enumerate(patches_idxs):

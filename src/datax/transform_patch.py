@@ -1,7 +1,7 @@
 import SimpleITK as sitk
 import numpy as np
-import data
-from normalize import normalize
+import datax.data as data
+from datax.normalize import normalize
 import config
 
 s1, a1 = config.patch_size_subtracter, config.patch_size_adder# 16,17
@@ -62,7 +62,7 @@ def extract_patch(im_idx, patch_idx):
     i, j, k = [20, 20, 20]
     patch = image[i - s1:i + a1, k - s1:k + a1]'''
 
-    if data.do_3d:
+    if config.patch_num_dim == 3:
         im_shape = img_full.shape
         imin,jmin,kmin = max(i-s1,0),max(j-s1,0),max(k-s1,0)
         imax,jmax,kmax = min(i+a1,im_shape[0]),min(j+a1,im_shape[1]),min(k+a1,im_shape[2])
@@ -109,7 +109,7 @@ def rotate_combine_normalize(im_idx, patch_idx, rotation, do_flip, patch_size=15
     patch = image[i - s1:i + a1, k - s1:k + a1]
     #patch = image[i - s1:i + a1, j - s1:j + a1, k - s1:k + a1]
     return patch'''
-    if data.do_3d:
+    if config.patch_num_dim == 3:
         return img_full[i-s1:i+a1, j-s1:j+a1, k-s1:k+a1, :]
 
     return img_full[i - s1:i + a1, j - s1:j + a1, k, :]

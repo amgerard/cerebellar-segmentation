@@ -3,8 +3,8 @@ from sklearn.metrics import confusion_matrix
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from transform_patch import rotate_combine_normalize, extract_patch
-import data
+from datax.transform_patch import rotate_combine_normalize, extract_patch
+import datax.data as data
 import config
 
 p_sz = config.patch_size
@@ -17,7 +17,7 @@ def predict(model, testX):
     :return: prediction for each patch
     '''
     pred = np.zeros([testX.shape[0]])
-    subset_size = 200 if data.do_3d else 1000
+    subset_size = 200 if config.patch_num_dim == 3 else 1000
     patches_subset = []
     good_idxs = []
     print(testX.shape, testX[:,0].min(), testX[:,0].max())
@@ -31,7 +31,7 @@ def predict(model, testX):
         if patch is None:
             print('Null patch: ', idxs)
             continue
-        if (data.do_3d and patch.shape == (p_sz,p_sz,p_sz,2)) or patch.shape == (p_sz,p_sz,2):
+        if (config.patch_num_dim == 3 and patch.shape == (p_sz,p_sz,p_sz,2)) or patch.shape == (p_sz,p_sz,2):
             patches_subset.append(patch)
             good_idxs.append(ix)
         else:
