@@ -23,7 +23,7 @@ class TflearnModel(object):
         cp_dir = 'chpts/' + name + '/'
         self.n_epochs = n_epochs
 
-        device = '/gpu:0'
+        device = '/gpu:0' if tf.test.is_gpu_available() else '/cpu:0'
         with tf.device(device):
             network = cnn_3d.get_network() if patch_num_dim == 3 else cnn_2d.get_network()
 
@@ -83,5 +83,3 @@ class TflearnModel(object):
                 np_arr = v.eval()
                 print(v.name, np_arr.shape)
                 np.save('/home/amgerard/src/CerebellumChallenge/cnn_src/model_np/' + v.name.replace('/','_') + ".npy", np_arr)
-        #import explore_model
-        #explore_model.explore(data.all_imgs[2], model)
