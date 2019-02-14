@@ -69,17 +69,6 @@ if __name__ == '__main__':
 
     brains = ['brain1', 'brain2', 'brain3', 'brain4', 'brain5']
 
-    #from predict_mask import makeCrblMaps
-    #makeCrblMaps('/home/amgerard/src/CerebellumChallenge/CerebellumData/CrblData/1mm/hans/53657/wholeBrain_label.nii.gz')
-
-    #for brain in brains:
-    #    smooth_brain(brain)
-    #    #break
-
-    #paths = get_brain_paths('brain1')
-    #paths = get_hans_paths('55648')
-    #plot_hist(paths[0], paths[2], 'brain1 t1 norm')
-
     for brain in brains:
         im = cleanup_wm(brain)
         sitk.WriteImage(im, base_dir + brain + "_lbls_1mm_cleanx.nrrd")

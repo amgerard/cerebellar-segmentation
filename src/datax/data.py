@@ -72,8 +72,6 @@ def get_test_data(t1_path, t2_path, cer_path):
     all_imgs.append(t1)
     all_imgs.append(t2)
     all_imgs.append(x)
-    import predict_mask
-    #crbl_map = predict_mask.get_crbl_map(t1_path, cer_path)
     import SimpleITK as sitk
     crbl_img = sitk.ReadImage(cer_path, sitk.sitkUInt16)
     crbl_np = sitk.GetArrayFromImage(crbl_img)
