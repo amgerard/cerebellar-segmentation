@@ -2,7 +2,7 @@ from __future__ import division, print_function, absolute_import
 import SimpleITK as sitk
 import numpy as np
 from datax.normalize import norm_to_zscore
-from datax.get_patches_3d import get_examples
+from datax.patches import get_examples
 
 def read_image(image_path):
     img = sitk.ReadImage(image_path, sitk.sitkFloat32)
