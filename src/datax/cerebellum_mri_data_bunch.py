@@ -1,11 +1,11 @@
 from __future__ import division, print_function, absolute_import
-from datax.cerebellum_mri_data import CerebellumMriData
 import numpy as np
+from datax.cerebellum_mri_data import CerebellumMriData
+from datax.data import get_shuffled
 
 class CerebellumMriDataBunch(object):
 
     def __init__(self, base_dir, brain_ids):
-
         self.base_dir = base_dir
         self.brain_ids = brain_ids
         self.images = {id:self.__create_brain_data_object(id) for id in self.brain_ids}
@@ -30,14 +30,8 @@ class CerebellumMriDataBunch(object):
             _x, _y = self.images[i].get_training_data(i)
             x = np.concatenate([x, _x], axis=0)
             y = np.concatenate([y, _y], axis=0)
-
+        
         randTrn = np.random.randint(0, 3, x.shape[0])
         x = x[randTrn == 1]
         y = y[randTrn == 1]
-
-        #x, y = get_shuffled(x, y)
-
-        print('done loading train: ', x[:5,:], y[:5])
-        print('done loading train: ', x.shape, y.shape)
-
-        return x, y
+        return get_shuffled(x, y)
