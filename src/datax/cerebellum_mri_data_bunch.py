@@ -35,3 +35,7 @@ class CerebellumMriDataBunch(object):
         x = x[randTrn == 1]
         y = y[randTrn == 1]
         return get_shuffled(x, y)
+
+
+    def get_image(self, brain_id):
+        return self.images[brain_id]

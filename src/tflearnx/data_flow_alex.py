@@ -142,11 +142,12 @@ class FeedDictFlowAlex(DataFlow):
             y = fd_as_list[1]
 
             for ix, idxs in enumerate(patches_idxs):
-                im_idx = idxs[0]
+                im_id = idxs[0]
                 vxl_idx = idxs[1:4]
                 rot_arr = idxs[4:7]
                 do_flip = idxs[-1]
-                x[ix] = rotate_combine_normalize(im_idx, vxl_idx, rot_arr, do_flip)
+                image_arr = config.data_bunch.get_image(im_id).get_image_arr()
+                x[ix] = rotate_combine_normalize(image_arr, vxl_idx, rot_arr, do_flip)
 
             inputs = tf.get_collection(tf.GraphKeys.INPUTS)
             targets = tf.get_collection(tf.GraphKeys.TARGETS)

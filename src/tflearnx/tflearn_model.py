@@ -38,7 +38,7 @@ class TflearnModel(object):
         model_path = 'models/' + self.name + '.tfl'
         self.model.load(model_path)
 
-    
+
     def train(self, X, Y, testX, testY):
         print('start training')
         print('X:', X.shape)
@@ -72,9 +72,9 @@ class TflearnModel(object):
         self.model.save('models/' + self.name + ".tfl")
 
 
-    def predict(self, image, x_test):
-        y_pred = evaluate.predict(self.model, x_test)
-        save_mask(image, x_test, y_pred)
+    def predict(self, image_arr, x_test, t1_image, out_file):
+        y_pred = evaluate.predict(self.model, image_arr, x_test)
+        save_mask(t1_image, x_test, y_pred, out_file)
 
 
     def explore(self):

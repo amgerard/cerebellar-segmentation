@@ -21,14 +21,14 @@ class CerebellumMriData(object):
     def load(self):
         t1_arr = read_image(self.t1_path)
         t2_arr = read_image(self.t2_path)
-        cerebellum_mask_arr = read_image(self.cerebellum_mask_path)
+        self.cerebellum_mask_arr = read_image(self.cerebellum_mask_path)
         if self.ground_truth_path != "":
             self.ground_truth_arr = read_image(self.ground_truth_path)
 
-        t1_arr[cerebellum_mask_arr == 0] = 0
-        t2_arr[cerebellum_mask_arr == 0] = 0
-        t1_arr = norm_to_zscore(t1_arr, cerebellum_mask_arr)
-        t2_arr = norm_to_zscore(t2_arr, cerebellum_mask_arr)
+        t1_arr[self.cerebellum_mask_arr == 0] = 0
+        t2_arr[self.cerebellum_mask_arr == 0] = 0
+        t1_arr = norm_to_zscore(t1_arr, self.cerebellum_mask_arr)
+        t2_arr = norm_to_zscore(t2_arr, self.cerebellum_mask_arr)
 
         t1_and_t2 = [np.expand_dims(t1_arr, axis=3), np.expand_dims(t2_arr, axis=3)]
         self.image_arr = np.concatenate(t1_and_t2, axis=3)
@@ -36,5 +36,12 @@ class CerebellumMriData(object):
     def get_training_data(self, im_idx):
         return get_examples(im_idx, self.image_arr, self.ground_truth_arr)
     
+    def get_image_arr(self):
+        return self.image_arr
+
+    def get_image_t1(self):
+        return sitk.ReadImage(self.t1_path, sitk.sitkFloat32)
+
     def get_testing_data(self):
-        pass # return x
+        crbl_idxs = np.where(self.cerebellum_mask_arr > 0)
+        return np.array(zip(*crbl_idxs))

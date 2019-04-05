@@ -9,7 +9,7 @@ import config
 
 p_sz = config.patch_size
 
-def predict(model, testX):
+def predict(model, image_arr, testX):
     '''
     predict feat vects to test using model
     :param model: tensorflow model
@@ -22,12 +22,8 @@ def predict(model, testX):
     good_idxs = []
     print(testX.shape, testX[:,0].min(), testX[:,0].max())
     for ix in range(testX.shape[0]):
-        idxs = testX[ix, 0:3] # testX[ix, 1:4]
-        im_idx = 2 # testX[ix, 0]
-
-        i, j, k = idxs
-        #patch = rotate_combine_normalize(idxs, [0, 0, 0], False)
-        patch = extract_patch(im_idx, idxs)
+        idxs = testX[ix, 0:3]
+        patch = extract_patch(image_arr, idxs)
         if patch is None:
             print('Null patch: ', idxs)
             continue
